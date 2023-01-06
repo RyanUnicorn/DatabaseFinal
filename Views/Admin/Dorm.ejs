@@ -8,6 +8,24 @@
 </head>
 <body>
     <%- include('../_Partials/Navbar') %>
-    
+    <table>
+        <tr>
+            <th>宿舍名稱</th>
+            <th>租金</th>
+        </tr>
+        <% for(let b of allBuilding){ %>
+            <tr>
+                <td>
+                    <a href="./Dorm/<%= b.name %>"><%= b.name %></a>
+                </td>
+                <td><%= b.cost %></td>
+            </tr>
+        <% } %>
+    </table>
+    <form method="post" action="/Api/Admin/AddBuilding">
+        <input type="text" name="buildingName" placeholder="宿舍名稱" required>
+        <input type="number" name="buildingCost" placeholder="租金" min="0" required>
+        <input type="submit" value="新增宿舍">
+    </form>
 </body>
 </html>

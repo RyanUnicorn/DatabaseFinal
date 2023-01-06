@@ -54,4 +54,26 @@ module.exports = {
 
         console.log(student);
     },
+
+    getAllBuilding: async () => {
+        let result = await pool.query(`SELECT * FROM building`);
+        return Array.from(result);
+    },
+
+    insertBuilding: async (name, cost) => {
+        name = name.replace(/[^\w\d]+/g, '');
+        cost = Math.max(0, parseInt(cost, 10));
+        await pool.query(`INSERT INTO building VALUES ('${name}', ${cost});`);
+    },
+
+    getDormAdminsBuilding: async (id) => {
+        let result = await pool.query(`SELECT building_name FROM dorm_admin WHERE student_id='${id}';`);
+        result = Array.from(result);
+        return result[0].building_name;
+    },
+
+    getAllRoom: async (buildingName) => {
+        let result = await pool.query(`SELECT room_number, building_name FROM ROOM LEFT JOIN building ON building_name = name WHERE building_name='${buildingName}';`);
+        return Array.from(result);
+    },
 }

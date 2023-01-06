@@ -45,4 +45,10 @@ module.exports = {
             });
         });
     },
+
+    postAdminAddBuilding: async (req, res) => {
+        console.log(req.body.buildingName, req.body.buildingCost);
+        await db.insertBuilding(req.body.buildingName, req.body.buildingCost);
+        res.redirect('/Admin/Dorm');
+    },
 };

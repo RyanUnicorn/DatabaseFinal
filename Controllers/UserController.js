@@ -1,3 +1,5 @@
+const db = require('../Models/DromDb');
+
 module.exports = {
     getLogin: async (req, res) => {
         // 登入介面
@@ -38,7 +40,24 @@ module.exports = {
         // S : 不能瀏覽
         // D : 只能瀏覽自己的大樓
         // A : 能瀏覽、新增
-        res.renderInjected('_Shared/Building');
+
+        let buildingName;
+
+        if(req.userData.roles.has('Admin')){
+            // 管理員
+            buildingName = req.params.buildId;
+        }else{
+            // 舍監
+            buildingName = await db.getDormAdminsBuilding(req.userData.id);
+        }
+
+        let allRooms = await db.getAllRoom(buildingName);
+        console.log(allRooms);
+
+        res.renderInjected('_Shared/Building', {
+            buildingName: buildingName,
+            allRooms: allRooms,
+        });
     },
 
     getRoom: async (req, res) => {
@@ -46,6 +65,7 @@ module.exports = {
         // S : 不能瀏覽
         // D : 只能瀏覽
         // A : 能瀏覽、新增、刪除?
+
         res.renderInjected('_Shared/Room');
     },
 };

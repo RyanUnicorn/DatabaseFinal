@@ -1,3 +1,5 @@
+const db = require('../Models/DromDb');
+
 module.exports = {
     getStudent: async (req, res) => {
         // 所有學生
@@ -28,7 +30,9 @@ module.exports = {
         // S : 不能瀏覽
         // D : 不能瀏覽
         // A : 能瀏覽、新增、刪除?
-        res.renderInjected('Admin/Dorm');
+        res.renderInjected('Admin/Dorm', {
+            allBuilding: await db.getAllBuilding(),
+        });
     },
 
     getEquipment: async (req, res) => {
