@@ -73,7 +73,16 @@ module.exports = {
     },
 
     getAllRoom: async (buildingName) => {
-        let result = await pool.query(`SELECT room_number, building_name FROM ROOM LEFT JOIN building ON building_name = name WHERE building_name='${buildingName}';`);
+        buildingName = buildingName.replace(/[^\w\d]+/g, '');
+        let result = await pool.query(`SELECT room_number, building_name FROM room LEFT JOIN building ON building_name = name WHERE building_name='${buildingName}';`);
         return Array.from(result);
     },
+
+    insertRoom: async (buildingName, roomNumber) => {
+        buildingName = buildingName.replace(/[^\w\d]+/g, '');
+        roomNumber = Math.max(0, parseInt(roomNumber, 10));
+        await pool.query(`INSERT INTO room VALUES ('${roomNumber}', '${buildingName}');`);
+    },
+
+
 }

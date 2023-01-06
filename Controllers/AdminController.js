@@ -1,4 +1,4 @@
-const db = require('../Models/DromDb');
+const db = require('../Models/DormDb');
 
 module.exports = {
     getStudent: async (req, res) => {

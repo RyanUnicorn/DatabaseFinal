@@ -1,4 +1,4 @@
-const db = require('../Models/DromDb');
+const db = require('../Models/DormDb');
 
 module.exports = {
     getLogin: async (req, res) => {
@@ -52,7 +52,6 @@ module.exports = {
         }
 
         let allRooms = await db.getAllRoom(buildingName);
-        console.log(allRooms);
 
         res.renderInjected('_Shared/Building', {
             buildingName: buildingName,

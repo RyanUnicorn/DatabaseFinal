@@ -15,10 +15,21 @@
         <% for(let r of allRooms){ %>
             <tr>
                 <td>
-                    <a href="./<%= r.building_name %>/<%= r.room_number %>"><%= r.room_number %></a>
+                    <% if(userData.roles.has('Admin')){ %>
+                        <a href="./<%= r.building_name %>/<%= r.room_number %>"><%= r.room_number %></a>
+                    <% }else{ %>
+                        <a href="./Room/<%= r.room_number %>"><%= r.room_number %></a>
+                    <% } %>
                 </td>
             </tr>
         <% } %>
     </table>
+    <% if(userData.roles.has('Admin')){ %>
+        <form method="post" action="/Api/Admin/AddRoom">
+            <input type="hidden" name="buildingName" value="<%= buildingName %>">
+            <input type="number" name="roomNumber" placeholder="房號" min="0" required>
+            <input type="submit" value="新增房間">
+        </form>
+    <% } %>
 </body>
 </html>

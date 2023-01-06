@@ -1,4 +1,4 @@
-const db = require('../Models/DromDb');
+const db = require('../Models/DormDb');
 
 module.exports = {
     postLogin: async (req, res) => {
@@ -50,5 +50,11 @@ module.exports = {
         console.log(req.body.buildingName, req.body.buildingCost);
         await db.insertBuilding(req.body.buildingName, req.body.buildingCost);
         res.redirect('/Admin/Dorm');
+    },
+
+    postAdminAddRoom: async (req, res) => {
+        console.log(req.body.buildingName, req.body.roomNumber);
+        await db.insertRoom(req.body.buildingName, req.body.roomNumber);
+        res.redirect('/Admin/Dorm/' + req.body.buildingName);
     },
 };
