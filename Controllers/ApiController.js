@@ -17,10 +17,13 @@ module.exports = {
                 
                 req.session.save(err => {
                     if(err) next(err);
-                    if((new Set(req.session.userRoles.split(' '))).has('Admin')){
+                    let roles = new Set(req.session.userRoles.split(' '));
+                    if(roles.has('Admin')){
                         res.redirect('/Admin/Dorm');
+                    }else if(roles.has('DormAdmin')){
+                        res.redirect('/DormAdmin/Announcement');
                     }else{
-                        res.redirect('/User/Announcement');
+                        res.redirect('/Student/Announcement');
                     }
                 });
             });

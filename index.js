@@ -12,8 +12,9 @@ app.use(session({
 }));
 
 // Routers
-const UserRouter = require('./Routers/UserRouter');
+const StudentRouter = require('./Routers/StudentRouter');
 const AdminRouter = require('./Routers/AdminRouter');
+const DormAdminRouter = require('./Routers/DormAdminRouter');
 const ApiRouter = require('./Routers/ApiRouter');
 
 // Middlewares
@@ -22,12 +23,13 @@ const defaultRoute = require('./Middlewares/DefaultRoute');
 const dataInjector = require('./Middlewares/DataInjector');
 
 // Main setting
-app.use(defaultRoute('/User/Login'));
+app.use(defaultRoute('/Student/Login'));
 app.use(logger);
 app.use(express.static(path.join(__dirname, '/Public')));
 app.use(dataInjector);
-app.use('/User', UserRouter);
+app.use('/Student', StudentRouter);
 app.use('/Admin', AdminRouter);
+app.use('/DormAdmin', DormAdminRouter);
 app.use('/Api', ApiRouter);
 
 app.listen(80, () => {

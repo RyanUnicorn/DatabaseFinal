@@ -1,33 +1,51 @@
 module.exports = {
     getLogin: async (req, res) => {
-        res.renderInjected('User/Login');
+        // 登入介面
+        res.renderInjected('Student/Login');
     },
 
     getApplication: async (req, res) => {
-        res.renderInjected('User/Application');
-    },
-
-    getRoom: async (req, res) => {
-        res.renderInjected('User/Room');
+        // 學生住請頁面
+        res.renderInjected('Student/Application');
     },
 
     getComment: async (req, res) => {
-        res.renderInjected('User/Comment');
+        // 留言板
+        // S(tudent) : 能瀏覽、發布
+        // D(ormAdmin) : 能瀏覽、發布、刪除
+        // A(dmin) : 能瀏覽、刪除
+        res.renderInjected('_Shared/Comment');
     },
 
     getAnnouncement: async (req, res) => {
-        res.renderInjected('User/Announcement');
+        // 公告
+        // S : 能瀏覽
+        // D : 能瀏覽、發布、刪除
+        // A : 能瀏覽、刪除
+        res.renderInjected('_Shared/Announcement');
     },
 
     getViolation: async (req, res) => {
-        res.renderInjected('User/Violation');
+        // 違規紀錄
+        // S : 能瀏覽
+        // D : 能瀏覽、發布、刪除
+        // A : 能瀏覽、刪除
+        res.renderInjected('_Shared/Violation');
     },
 
-    getStudent: async (req, res) => {
-        res.renderInjected('User/Student');
+    getBuilding: async (req, res) => {
+        // 某大樓內所有房間
+        // S : 不能瀏覽
+        // D : 只能瀏覽自己的大樓
+        // A : 能瀏覽、新增
+        res.renderInjected('_Shared/Building');
     },
 
-    getStudentId: async (req, res) => {
-        res.renderInjected('User/StudentId');
+    getRoom: async (req, res) => {
+        // 房間詳細資料頁面
+        // S : 不能瀏覽
+        // D : 只能瀏覽
+        // A : 能瀏覽、新增、刪除?
+        res.renderInjected('_Shared/Room');
     },
 };

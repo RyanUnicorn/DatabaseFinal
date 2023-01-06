@@ -19,6 +19,6 @@ module.exports = (roles) => {
             }
         }
         
-        res.redirect('/User/Login');
+        res.redirect('/Student/Login');
     };
 };

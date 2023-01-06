@@ -1,16 +1,25 @@
 <nav>
     <% if(userData){ %>
 
-        <% if(userData.roles.has('Student')){ %>
-            <!-- if student -->
-            <a href="/User/Announcement">公告</a>
-            <a href="/User/Violation">違規紀錄</a>
-            <a href="/User/Comment">留言板</a>
-            <a href="/User/Room">房間</a>
-            <a href="/User/Student">學生</a>
-            <a href="/User/Application">住宿申請</a>
-        <% }else{ %>
+        <% if(userData.roles.has('DormAdmin')){ %>
+            <!-- if DormAdmin -->
+            <a href="/DormAdmin/Announcement">公告</a>
+            <a href="/DormAdmin/Violation">違規紀錄</a>
+            <a href="/DormAdmin/Comment">留言板</a>
+            <a href="/DormAdmin/Application">住宿申請</a>
+            <a href="/DormAdmin/Room">房間管理</a>
+
+        <% }else if(userData.roles.has('Student')){ %>
+            <!-- if Student -->
+            <a href="/Student/Announcement">公告</a>
+            <a href="/Student/Violation">違規紀錄</a>
+            <a href="/Student/Comment">留言板</a>
+            <a href="/Student/Application">住宿申請</a>
+        <% }else if(userData.roles.has('Admin')){ %>
             <!-- if admin -->
+            <a href="/Admin/Announcement">公告</a>
+            <a href="/Admin/Violation">違規紀錄</a>
+            <a href="/Admin/Comment">留言板</a>
             <a href="/Admin/Dorm">宿舍管理</a>
             <a href="/Admin/Student">學生管理</a>
             <a href="/Admin/Application">審核住宿申請</a>
@@ -20,6 +29,6 @@
         <span>帳號 : <%= userData.id %></span>
         <a href="/Api/Logout">登出</a>
     <% }else{ %>
-        <a href="/User/Login">登入</a>
+        <a href="/Student/Login">登入</a>
     <% } %>
     </nav>
