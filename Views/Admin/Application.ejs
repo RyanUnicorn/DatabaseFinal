@@ -25,7 +25,7 @@
         <% for(let b of allApplication){ %>
             <tr>
                 <td><%= b.student_id %></td>
-                <td><%= b.apply_date %></td>
+                <td><%= b.apply_date.toLocaleDateString() %></td>
                 <td><%= b.school_year %></td>
                 <td><%= b.semester %></td>
                 <td>

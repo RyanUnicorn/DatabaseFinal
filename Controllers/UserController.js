@@ -8,7 +8,10 @@ module.exports = {
 
     getApplication: async (req, res) => {
         // 學生申請頁面
-        res.renderInjected('Student/Application');
+        res.renderInjected('Student/Application',{
+            Application: await db.getApplication(req.userData.id),
+        });
+        
     },
 
     getComment: async (req, res) => {

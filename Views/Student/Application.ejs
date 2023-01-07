@@ -8,6 +8,37 @@
 </head>
 <body>
     <%- include('../_Partials/Navbar') %>
-    
+    <%if(Application != ''){%>
+        <table>
+            <tr>
+                <th>學號</th>
+                <th>申請日期</th>
+                <th>申請學年</th>
+                <th>申請學期</th>
+                <th>付費狀態</th>
+                <th>核可狀態</th>
+            </tr>
+            <% for(let b of Application){ %>
+                <tr>
+                    <td><%= b.student_id %></td>
+                    <td><%= b.apply_date.toLocaleDateString() %></td>
+                    <td><%= b.school_year %></td>
+                    <td><%= b.semester %></td>
+                    <td <%if(b.paid == 'N'){%>hidden<%}%>>已付款</td>
+                    <td <%if(b.paid == 'Y'){%>hidden<%}%>>尚未付款</td>
+                    <td <%if(b.approve == 'P' || b.approve == 'Y'){%>hidden<%}%>>申請未通過</td>
+                    <td <%if(b.approve == 'P' || b.approve == 'N'){%>hidden<%}%>>申請通過</td>
+                    <td <%if(b.approve == 'N' || b.approve == 'Y'){%>hidden<%}%>>審核中</td>
+                </tr>
+            <% } %>
+        </table>
+    <% } else{ %>
+        <form method="post" action="/Api/Student/postApply">
+            <input type="text" name="student_id" placeholder="學號" value = '<%=userData.id%>' readonly>
+            <input type="number" name="school_year" placeholder="申請學年" min="0" required>
+            <input type="number" name="semester" placeholder="申請學期" min="0" required>
+            <input type="submit" value="申請">
+        </form>
+    <% } %>
 </body>
 </html>

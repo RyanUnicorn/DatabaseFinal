@@ -102,4 +102,9 @@ module.exports = {
         }
         res.redirect('/Admin/Application');
     },
+
+    postApply: async (req, res) => {
+        await db.insertApplication(req.userData.id, req.body.school_year, req.body.semester);
+        res.redirect('/Student/Application');
+    },
 };
