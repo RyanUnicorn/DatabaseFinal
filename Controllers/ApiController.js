@@ -47,14 +47,46 @@ module.exports = {
     },
 
     postAdminAddBuilding: async (req, res) => {
-        console.log(req.body.buildingName, req.body.buildingCost);
+        // console.log(req.body.buildingName, req.body.buildingCost);
         await db.insertBuilding(req.body.buildingName, req.body.buildingCost);
         res.redirect('/Admin/Dorm');
     },
 
     postAdminAddRoom: async (req, res) => {
-        console.log(req.body.buildingName, req.body.roomNumber);
+        // console.log(req.body.buildingName, req.body.roomNumber);
         await db.insertRoom(req.body.buildingName, req.body.roomNumber);
-        res.redirect('/Admin/Dorm/' + req.body.buildingName);
+        res.redirect(`/Admin/Dorm/${req.body.buildingName}`);
     },
+
+    postAdminAssignStudent: async (req, res) => {
+        // console.log(req.body.buildingName, req.body.roomNumber, req.body.studentId);
+
+        let homeless = await db.getAllApprovedHomelessStudent();
+        let assignable = false;
+        // console.log(homeless);
+        for(let s of homeless){
+            // console.log(s.building_name, s.room_number, s.student_id);
+            if(!s.building_name && !s.room_number && s.student_id === req.body.studentId){
+                assignable = true;
+                break;
+            }
+        }
+        if(assignable){
+            await db.assignStudentToRoom(req.body.buildingName, req.body.roomNumber, req.body.studentId);
+        }
+        
+        res.redirect(`/Admin/Dorm/${req.body.buildingName}/${req.body.roomNumber}`);
+    },
+
+    postUpdateEquipment: async (req, res) => {
+        let buildingName = req.body.buildingName;
+        let roomNumber = req.body.roomNumber;
+        let equipmentName = req.body.equipmentName;
+        let quantity = req.body.quantity;
+        
+        await db.updateEquipment(buildingName, roomNumber, equipmentName, quantity);
+        res.redirect(`/Admin/Dorm/${buildingName}/${roomNumber}`);
+    },
+
+
 };

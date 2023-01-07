@@ -8,6 +8,16 @@
 </head>
 <body>
     <%- include('../_Partials/Navbar') %>
-    
+
+    <h2><%= buildingName %>-<%= roomNumber %>-<%= equipmentDetail.name %>:</h2>
+    <form method="post" action="/Api/Admin/UpdateEquipment">
+        <input type="hidden" name="buildingName" value="<%= buildingName %>">
+        <input type="hidden" name="roomNumber" value="<%= roomNumber %>">
+        <input type="hidden" name="equipmentName" value="<%= equipmentDetail.name %>">
+        <input type="number" id="quantity" name="quantity" value="<%= equipmentDetail.quantity %>" min="1" >
+        <label for="quantity">個</label>
+        <input type="submit" value="更新">
+    </form>
+
 </body>
 </html>

@@ -8,6 +8,28 @@
 </head>
 <body>
     <%- include('../_Partials/Navbar') %>
+
+    <table>
+        <tr>
+            <th>學號</th>
+            <th>姓名</th>
+            <th>宿舍大樓</th>
+            <th>房號</th>
+        </tr>
+        <% for(let s of students){ %>
+            <tr>
+                <td><%= s.student_id %></td>
+                <td><%= s.name %></td>
+                <td><%= s.building_name ?? '未住宿' %></td>
+                <td><%= s.room_number ?? '未住宿' %></td>
+                <td>
+                    <a href="/Admin/Student/<%= s.student_id %>">
+                        <button>詳細資料</button>
+                    </a>
+                </td>
+            </tr>
+        <% } %>
+    </table>
     
 </body>
 </html>
