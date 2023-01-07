@@ -8,6 +8,66 @@
 </head>
 <body>
     <%- include('../_Partials/Navbar') %>
+    <table>
+        <tr>
+            <th>學號</th>
+            <th>申請日期</th>
+            <th>申請學年</th>
+            <th>申請學期</th>
+            <th>付費狀態</th>
+            <th>核可狀態</th>
+        </tr>
+        <script>
+            var PaidTemp=[];
+            var StudentTemp=[];
+            var ApproveTemp=[];
+        </script>
+        <% for(let b of allApplication){ %>
+            <tr>
+                <td><%= b.student_id %></td>
+                <td><%= b.apply_date %></td>
+                <td><%= b.school_year %></td>
+                <td><%= b.semester %></td>
+                <td>
+                    <select id = "<%= b.student_id %>">
+                        <option value = 'Y' <%if(b.paid == 'Y'){%>selected<%}%>>Yes</option>
+                        <option value = 'N' <%if(b.paid == 'N'){%>selected<%}%>>No</option>
+                    </select>
+                </td>
+                <td>
+                    <select id = "<%= b.student_id %>approve">
+                        <option value = 'P' <%if(b.approve == 'P'){%>selected<%}%>>待審核</option>
+                        <option value = 'Y' <%if(b.approve == 'Y'){%>selected<%}%>>Yes</option>
+                        <option value = 'N' <%if(b.approve == 'N'){%>selected<%}%>>No</option>
+                    </select>
+                </td>
+            </tr>
+            <script>
+                StudentTemp.push('<%= b.student_id %>');
+            </script>
+        <% } %>
+    </table>
+    
+    <script>
+        function postData(){
+            PaidTemp=[];
+            ApproveTemp=[];
+            for(let i  = 0 ; i< StudentTemp.length; i++){
+                var PaidSelect = document.getElementById(StudentTemp[i]).value;
+                var ApproveSelect = document.getElementById(StudentTemp[i]+'approve').value;
+                PaidTemp.push(PaidSelect);
+                ApproveTemp.push(ApproveSelect);
+            }
+            let formData = document.forms.applicationData.elements.data;
+            formData.value = JSON.stringify({StudentTemp, PaidTemp, ApproveTemp});
+            alert("更新成功");
+        }
+
+    </script>
+    <form name="applicationData" method="post" action="/Api/Admin/postAdminUpdateApplication" onsubmit="postData()">
+        <input type="hidden" name="data" value= "">
+        <input type="submit" value="更新">
+    </form>
     
 </body>
 </html>

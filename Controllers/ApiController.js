@@ -89,4 +89,17 @@ module.exports = {
     },
 
 
+    postAdminUpdateApplication: async (req, res) => {
+        var student = JSON.parse(req.body.data).StudentTemp;
+        var paid = JSON.parse(req.body.data).PaidTemp;
+        var approve = JSON.parse(req.body.data).ApproveTemp;
+        var application = await db.getAllApplication();
+        for(let i=0; i<application.length   ; i++){
+            if(paid[i] != application[i].paid || approve[i] != application[i].approve){
+                await db.updateAllApplication(student[i], paid[i], approve[i]);
+                console.log("Update Student: "+student[i]+" Paid: "+paid[i]+" Approve: "+approve[i]);
+            }
+        }
+        res.redirect('/Admin/Application');
+    },
 };

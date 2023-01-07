@@ -7,7 +7,7 @@ module.exports = {
     },
 
     getApplication: async (req, res) => {
-        // 學生住請頁面
+        // 學生申請頁面
         res.renderInjected('Student/Application');
     },
 

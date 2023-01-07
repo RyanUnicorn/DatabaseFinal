@@ -10,6 +10,7 @@ router.post('/Admin/AddBuilding', auth('Admin'), express.urlencoded({extended: f
 router.post('/Admin/AddRoom', auth('Admin'), express.urlencoded({extended: false}) , controller.postAdminAddRoom);
 router.post('/Admin/AssignStudent', auth('Admin'), express.urlencoded({extended: false}) , controller.postAdminAssignStudent);
 router.post('/Admin/UpdateEquipment', auth('Admin'), express.urlencoded({extended: false}) , controller.postUpdateEquipment);
+router.post('/Admin/postAdminUpdateApplication', auth('Admin'), express.urlencoded({extended: false}) , controller.postAdminUpdateApplication);
 
 
 module.exports = router;

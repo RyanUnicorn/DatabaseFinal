@@ -32,7 +32,9 @@ module.exports = {
         // S : 不能瀏覽
         // D : 不能瀏覽
         // A : 能瀏覽、審核
-        res.renderInjected('Admin/Application');
+        res.renderInjected('Admin/Application', {
+            allApplication: await db.getAllApplication(),
+        });
     },
 
     getDorm: async (req, res) => {
