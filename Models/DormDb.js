@@ -167,4 +167,13 @@ module.exports = {
         punishment = punishment.replace(/[;'`@]+/g, '');
         await pool.query(`INSERT INTO violation_record (violation_detail, punishment, student_id, dorm_admin_id) VALUES ('${detail}', '${punishment}', '${studentId}', '${dormAdminId}');`);
     },
+
+    getApplication: async (stu_id) => {
+        let result = await pool.query(`SELECT * FROM application WHERE student_id = '${stu_id}';`);
+        return Array.from(result);
+    },
+
+    insertApplication: async (stu_id, school_year, semester) => {
+        await pool.query(`INSERT INTO application ( student_id, school_year, semester) VALUES ('${stu_id}', '${school_year}', '${semester}');`);
+    },
 }
