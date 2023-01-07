@@ -25,12 +25,12 @@ const dataInjector = require('./Middlewares/DataInjector');
 // Main setting
 app.use(defaultRoute('/Student/Login'));
 app.use(logger);
-app.use(express.static(path.join(__dirname, '/Public')));
 app.use(dataInjector);
 app.use('/Student', StudentRouter);
 app.use('/Admin', AdminRouter);
 app.use('/DormAdmin', DormAdminRouter);
 app.use('/Api', ApiRouter);
+app.use(express.static(path.join(__dirname, '/Public')));
 
 app.listen(80, () => {
     console.log('http://localhost:80');
