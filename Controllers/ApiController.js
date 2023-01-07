@@ -78,7 +78,7 @@ module.exports = {
         res.redirect(`/Admin/Dorm/${req.body.buildingName}/${req.body.roomNumber}`);
     },
 
-    postUpdateEquipment: async (req, res) => {
+    postAdminUpdateEquipment: async (req, res) => {
         let buildingName = req.body.buildingName;
         let roomNumber = req.body.roomNumber;
         let equipmentName = req.body.equipmentName;
@@ -88,6 +88,15 @@ module.exports = {
         res.redirect(`/Admin/Dorm/${buildingName}/${roomNumber}`);
     },
 
+    postAdminDeleteViolation: async (req, res) => {
+        db.deleteViolationWithAdmin(req.body.violationId);
+        res.redirect('/Admin/Violation');
+    },
+
+    postDormAdminDeleteViolation: async (req, res) => {
+        db.deleteViolationWithDormAdmin(req.body.violationId, req.userData.id);
+        res.redirect('/DormAdmin/Violation');
+    },
 
     postAdminUpdateApplication: async (req, res) => {
         var student = JSON.parse(req.body.data).StudentTemp;
@@ -101,5 +110,11 @@ module.exports = {
             }
         }
         res.redirect('/Admin/Application');
+    },
+
+    postDormAdminNewViolation: async (req, res) => {
+        // console.log(req.userData.id, req.body.studentId, req.body.detail, req.body.punishment);
+        await db.insertViolation(req.userData.id, req.body.studentId, req.body.detail, req.body.punishment);
+        res.redirect('/DormAdmin/Violation');
     },
 };

@@ -63,7 +63,7 @@ module.exports = {
     insertBuilding: async (name, cost) => {
         name = name.replace(/[^\w\d]+/g, '');
         cost = Math.max(0, parseInt(cost, 10));
-        await pool.query(`INSERT INTO building VALUES ('${name}', ${cost});`);
+        return pool.query(`INSERT INTO building VALUES ('${name}', ${cost});`);
     },
 
     getDormAdminsBuilding: async (id) => {
@@ -134,8 +134,37 @@ module.exports = {
         let result = await pool.query(`SELECT * FROM application;`);
         return Array.from(result);
     },
+    getViolationData: async () => {
+        let result = await pool.query(`SELECT * FROM violation_record NATURAL JOIN (SELECT student_id, name, room_number, building_name FROM student) s ORDER BY violation_date;`);
+        return Array.from(result);
+    },
+
+    getViolationDataForDormAdmin: async (dormAdminId) => {
+        dormAdminId = dormAdminId.replace(/[^\w\d]+/g, '');
+        let result = await pool.query(`SELECT * FROM violation_record NATURAL JOIN (SELECT student_id, name, room_number, building_name FROM student) s WHERE dorm_admin_id='${dormAdminId}' ORDER BY violation_date;`);
+        return Array.from(result);
+    },
+
+    deleteViolationWithAdmin: async (violationId) => {
+        violationId = Math.max(0, parseInt(violationId, 10));
+        return await pool.query(`DELETE FROM violation_record WHERE violation_id=${violationId};`);
+    },
+
+    deleteViolationWithDormAdmin: async (violationId, dormAdminId) => {
+        dormAdminId = dormAdminId.replace(/[^\w\d]+/g, '');
+        violationId = Math.max(0, parseInt(violationId, 10));
+        return await pool.query(`DELETE FROM violation_record WHERE violation_id=${violationId} AND dorm_admin_id='${dormAdminId}';`);
+    },
 
     updateAllApplication: async (Student, Paid, Approve) => {
         await pool.query(`UPDATE application SET paid = '${Paid}', approve = '${Approve}' WHERE student_id = '${Student}';`);
+    },
+
+    insertViolation: async (dormAdminId, studentId, detail, punishment) => {
+        dormAdminId = dormAdminId.replace(/[^\w\d]+/g, '');
+        studentId = studentId.replace(/[^\w\d]+/g, '');
+        detail = detail.replace(/[;'`@]+/g, '');
+        punishment = punishment.replace(/[;'`@]+/g, '');
+        await pool.query(`INSERT INTO violation_record (violation_detail, punishment, student_id, dorm_admin_id) VALUES ('${detail}', '${punishment}', '${studentId}', '${dormAdminId}');`);
     },
 }

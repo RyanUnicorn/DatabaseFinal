@@ -32,7 +32,12 @@ module.exports = {
         // S : 能瀏覽
         // D : 能瀏覽、發布、刪除
         // A : 能瀏覽、刪除
-        res.renderInjected('_Shared/Violation');
+
+        let violationDatas = await db.getViolationData();
+
+        res.renderInjected('_Shared/Violation', {
+            violationDatas: violationDatas,
+        });
     },
 
     getBuilding: async (req, res) => {
