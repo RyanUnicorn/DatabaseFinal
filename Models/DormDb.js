@@ -84,5 +84,12 @@ module.exports = {
         await pool.query(`INSERT INTO room VALUES ('${roomNumber}', '${buildingName}');`);
     },
 
+    getAllApplication: async () => {
+        let result = await pool.query(`SELECT * FROM application;`);
+        return Array.from(result);
+    },
 
+    updateAllApplication: async (Student, Paid, Approve) => {
+        await pool.query(`UPDATE application SET paid = '${Paid}', approve = '${Approve}' WHERE student_id = '${Student}';`);
+    },
 }
