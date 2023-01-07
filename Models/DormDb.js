@@ -81,7 +81,53 @@ module.exports = {
     insertRoom: async (buildingName, roomNumber) => {
         buildingName = buildingName.replace(/[^\w\d]+/g, '');
         roomNumber = Math.max(0, parseInt(roomNumber, 10));
-        await pool.query(`INSERT INTO room VALUES ('${roomNumber}', '${buildingName}');`);
+        return pool.query(`INSERT INTO room VALUES ('${roomNumber}', '${buildingName}');`);
+    },
+
+    getAllRoomsStudent: async (buildingName, roomNumber) => {
+        buildingName = buildingName.replace(/[^\w\d]+/g, '');
+        roomNumber = Math.max(0, parseInt(roomNumber, 10));
+        let result = await pool.query(`SELECT student_id, name FROM student NATURAL JOIN room WHERE building_name='${buildingName}' AND room_number=${roomNumber};`);
+        return Array.from(result);
+    },
+
+    getAllApprovedHomelessStudent: async () => {
+        let result = await pool.query(`SELECT * FROM student NATURAL JOIN application WHERE room_number IS NULL and building_name IS NULL;`);
+        return Array.from(result);
+    },
+
+    assignStudentToRoom: async (buildingName, roomNumber, studentId) => {
+        buildingName = buildingName.replace(/[^\w\d]+/g, '');
+        roomNumber = Math.max(0, parseInt(roomNumber, 10));
+        studentId = studentId.replace(/[^\w\d]+/g, '');
+        return pool.query(`UPDATE student SET room_number='${roomNumber}', building_name='${buildingName}' WHERE student_id='${studentId}';`);
+    },
+
+    getAllRoomsEquipment: async (buildingName, roomNumber) => {
+        buildingName = buildingName.replace(/[^\w\d]+/g, '');
+        roomNumber = Math.max(0, parseInt(roomNumber, 10));
+        let result = await pool.query(`SELECT * FROM room_equipment WHERE room_number='${roomNumber}' AND building_name='${buildingName}';`);
+        return Array.from(result);
+    },
+
+    updateEquipment: async (buildingName, roomNumber, equipmentName, quantity) => {
+        buildingName = buildingName.replace(/[^\w\d]+/g, '');
+        equipmentName = equipmentName.replace(/[^\w\d]+/g, '');
+        roomNumber = Math.max(0, parseInt(roomNumber, 10));
+        quantity = Math.max(1, parseInt(quantity, 10));
+        let result = await pool.query(`UPDATE room_equipment SET quantity=${quantity} WHERE room_number='${roomNumber}' AND building_name='${buildingName}' AND name='${equipmentName}';`);
+        return Array.from(result);
+    },
+
+    getAllStudent: async () => {
+        let result = await pool.query(`SELECT * FROM student;`)
+        return Array.from(result).filter(s => !(s.student_id === 'a0000000'));
+    },
+
+    getStudentById: async (studentId) => {
+        studentId = studentId.replace(/[^\w\d]+/g, '');
+        let result = await pool.query(`SELECT * FROM student WHERE student_id='${studentId}';`);
+        return Array.from(result)[0];
     },
 
     getAllApplication: async () => {

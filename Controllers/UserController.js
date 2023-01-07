@@ -65,6 +65,26 @@ module.exports = {
         // D : 只能瀏覽
         // A : 能瀏覽、新增、刪除?
 
-        res.renderInjected('_Shared/Room');
+        let buildingName;
+        let roomNumber = req.params.roomId;
+
+        if(req.userData.roles.has('Admin')){
+            // 管理員
+            buildingName = req.params.buildId;
+        }else{
+            // 舍監
+            buildingName = await db.getDormAdminsBuilding(req.userData.id);
+        }
+        let allStudents = await db.getAllRoomsStudent(buildingName, roomNumber);
+        let allEquipments = await db.getAllRoomsEquipment(buildingName, roomNumber);
+        let assignableStudents = await db.getAllApprovedHomelessStudent();
+
+        res.renderInjected('_Shared/Room', {
+            buildingName: buildingName,
+            roomNumber: roomNumber,
+            allStudents: allStudents,
+            allEquipments: allEquipments,
+            assignableStudents: assignableStudents,
+        });
     },
 };

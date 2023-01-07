@@ -8,6 +8,71 @@
 </head>
 <body>
     <%- include('../_Partials/Navbar') %>
-    
+
+    <h2><%= buildingName %>-<%= roomNumber %>:</h2>
+
+    <table>
+        <tr>
+            <th>學號</th>
+            <th>姓名</th>
+        </tr>
+        <% for(let s of allStudents){ %>
+            <tr>
+                <td><%= s.student_id %></td>
+                <td><%= s.name %></td>
+                <% if(userData.roles.has('Admin')){ %>
+                    <td>
+                        <a href="/Admin/Student/<%= s.student_id %>">
+                            <button>學生資料</button>
+                        </a>
+                    </td>
+                <% } %>
+            </tr>
+        <% } %>
+    </table>
+
+    <% if(userData.roles.has('Admin')){ %>
+        <details>
+            <summary>新增核可學生</summary>
+            <table>
+                <tr>
+                    <th>學號</th>
+                    <th>姓名</th>
+                </tr>
+                <% for(let s of assignableStudents){ %>
+                    <tr>
+                        <form method="post" action="/Api/Admin/AssignStudent">
+                            <input type="hidden" name="buildingName" value="<%= buildingName %>">
+                            <input type="hidden" name="roomNumber" value="<%= roomNumber %>">
+                            <input type="hidden" name="studentId" value="<%= s.student_id %>">
+                            <td><%= s.student_id %></td>
+                            <td><%= s.name %></td>
+                            <td><input type="submit" value="新增"></td>
+                        </form>
+                    </tr>
+                <% } %>
+            </table>
+        </details>
+        <details>
+            <summary>設備</summary>
+            <table>
+                <tr>
+                    <th>名稱</th>
+                    <th>數量</th>
+                </tr>
+                <% for(let e of allEquipments){ %>
+                    <tr>
+                        <td><%= e.name %></td>
+                        <td><%= e.quantity %></td>
+                        <td>
+                            <a href="/Admin/Dorm/<%= buildingName %>/<%= roomNumber %>/<%= e.name %>">
+                                <button>更改</button>
+                            </a>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        </details>
+    <% } %>
 </body>
 </html>

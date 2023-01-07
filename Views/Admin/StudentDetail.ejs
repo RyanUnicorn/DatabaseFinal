@@ -4,10 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FUCK YOU</title>
+    <title><%= studentData.student_id %> 詳細資料</title>
 </head>
 <body>
     <%- include('../_Partials/Navbar') %>
+    <table>
+        <tr>
+            <th>學號</th>
+            <th><%= studentData.student_id %></th>
+        </tr>
+        <tr>
+            <th>姓名</th>
+            <th><%= studentData.name %></th>
+        </tr>
+        <tr>
+            <th>性別</th>
+            <th><%= (studentData.sex ?? '非二元性別') === 'M'? '男' : '女' %></th>
+        </tr>
+        <tr>
+            <th>電子郵件</th>
+            <th><%= studentData.email ?? '無' %></th>
+        </tr>
+        <tr>
+            <th>電話</th>
+            <th><%= studentData.phone_number ?? '無' %></th>
+        </tr>
+        <tr>
+            <th>宿舍大樓</th>
+            <th><%= studentData.building_name ?? '未住宿' %></th>
+        </tr>
+        <tr>
+            <th>房號</th>
+            <th><%= studentData.room_number ?? '未住宿' %></th>
+        </tr>
+    </table>
     
 </body>
 </html>
