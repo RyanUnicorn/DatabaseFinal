@@ -131,7 +131,7 @@ module.exports = {
     },
 
     getAllApplication: async () => {
-        let result = await pool.query(`SELECT * FROM application;`);
+        let result = await pool.query(`SELECT * FROM application WHERE approve = 'P';`);
         return Array.from(result);
     },
     getViolationData: async () => {
