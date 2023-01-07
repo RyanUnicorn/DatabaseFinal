@@ -20,5 +20,8 @@ router.post('/Admin/DeleteAnnouncement', auth('Admin'), controller.postAdminDele
 router.post('/DormAdmin/DeleteAnnouncement', auth('DormAdmin'), controller.postDormAdminDeleteAnnouncement);
 router.post('/PostAnnouncement', auth('Admin DormAdmin'), controller.postAnnouncement);
 router.post('/Student/postApply', auth('Student'), controller.postApply);
+router.post('/PostComment', auth(), controller.postComment);
+router.post('/DeleteComment', auth('Admin DormAdmin'), controller.deleteComment);
+
 
 module.exports = router;

@@ -19,7 +19,12 @@ module.exports = {
         // S(tudent) : 能瀏覽、發布
         // D(ormAdmin) : 能瀏覽、發布、刪除
         // A(dmin) : 能瀏覽、刪除
-        res.renderInjected('_Shared/Comment');
+
+        let comments = await db.getAllComment();
+
+        res.renderInjected('_Shared/Comment', {
+            comments: comments,
+        });
     },
 
     getAnnouncement: async (req, res) => {

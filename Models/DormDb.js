@@ -200,4 +200,20 @@ module.exports = {
         content = content.replace(/[;'`@]+/g, '');
         return await pool.query(`INSERT INTO announcement (content, student_id) VALUES ('${content}', '${posterId}');`);
     },
+
+    getAllComment: async () => {
+        let result = await pool.query(`SELECT comment_id, comment, name, student_id FROM comment natural JOIN student;`);
+        return Array.from(result);
+    },
+
+    postComment: async (comment, posterId) => {
+        comment = comment.replace(/[;'`@]+/g, '');
+        return await pool.query(`INSERT INTO comment (comment, student_id) VALUES ('${comment}', '${posterId}');`);
+    },
+
+    deleteComment: async (commentId) => {
+        commentId = Math.max(0, parseInt(commentId, 10));
+        let result = await pool.query(`DELETE FROM comment WHERE comment_id=${commentId};`);
+        return Array.from(result);
+    },
 }

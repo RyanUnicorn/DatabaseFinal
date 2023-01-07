@@ -138,4 +138,32 @@ module.exports = {
         db.postAnnouncement(req.body.content, req.userData.id);
         res.redirect(`/${req.userData.roles.has('Admin')? 'Admin' : 'DormAdmin'}/Announcement`);
     },
+
+    postComment: async (req, res) => {
+        // console.log(req.body.content, req.userData.id);
+        db.postComment(req.body.comment, req.userData.id);
+        let url;
+        if(req.userData.roles.has('Admin')){
+            url = 'Admin';
+        }else if(req.userData.roles.has('DormAdmin')){
+            url = 'DormAdmin';
+        }else{
+            url = 'Student';
+        }
+        res.redirect(`/${url}/Comment`);
+    },
+
+    deleteComment: async (req, res) => {
+        // console.log(req.body.content, req.userData.id);
+        db.deleteComment(req.body.commentId);
+        let url;
+        if(req.userData.roles.has('Admin')){
+            url = 'Admin';
+        }else if(req.userData.roles.has('DormAdmin')){
+            url = 'DormAdmin';
+        }else{
+            url = 'Student';
+        }
+        res.redirect(`/${url}/Comment`);
+    },
 };
