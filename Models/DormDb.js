@@ -165,7 +165,11 @@ module.exports = {
         studentId = studentId.replace(/[^\w\d]+/g, '');
         detail = detail.replace(/[;'`@]+/g, '');
         punishment = punishment.replace(/[;'`@]+/g, '');
-        await pool.query(`INSERT INTO violation_record (violation_detail, punishment, student_id, dorm_admin_id) VALUES ('${detail}', '${punishment}', '${studentId}', '${dormAdminId}');`);
+        try{
+            await pool.query(`INSERT INTO violation_record (violation_detail, punishment, student_id, dorm_admin_id) VALUES ('${detail}', '${punishment}', '${studentId}', '${dormAdminId}');`);
+        }catch(err){
+            console.log(err);
+        }
     },
 
     getApplication: async (stu_id) => {
