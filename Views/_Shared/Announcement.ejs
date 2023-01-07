@@ -8,6 +8,44 @@
 </head>
 <body>
     <%- include('../_Partials/Navbar') %>
+
+    <table>
+        <tr>
+            <th>公告內容</th>
+            <th>公告人</th>
+        </tr>
+
+        <% for(let a of announcements){ %>
+            <tr>
+                <td>
+                    <textarea readonly disabled><%= a.content %></textarea>
+                </td>
+                <td><%= a.name %>(<%= a.student_id %>)</td>
+                <% if(userData.roles.has('Admin')){ %>
+                    <td>
+                        <form method="post" action="/Api/Admin/DeleteAnnouncement" onsubmit="return confirm('確定刪除?')">
+                            <input type="hidden" name="announcementId" value="<%= a.announcement_id %>">
+                            <input type="submit" value="刪除">
+                        </form>
+                    </td>
+                <% }else if(userData.roles.has('DormAdmin') && a.student_id === userData.id){ %>
+                    <td>
+                        <form method="post" action="/Api/DormAdmin/DeleteAnnouncement" onsubmit="return confirm('確定刪除?')">
+                            <input type="hidden" name="announcementId" value="<%= a.announcement_id %>">
+                            <input type="submit" value="刪除">
+                        </form>
+                    </td>
+                <% } %>
+            </tr>
+        <% } %>
+    </table>
+
+    <% if(userData.roles.has('Admin') || userData.roles.has('DormAdmin')){ %>
+        <form method="post" action="/Api/PostAnnouncement">
+            <textarea name="content" id="" cols="30" rows="10" placeholder="輸入公告內容" ></textarea>
+            <input type="submit" value="公佈">
+        </form>
+    <% } %>
     
 </body>
 </html>

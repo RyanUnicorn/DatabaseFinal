@@ -117,4 +117,20 @@ module.exports = {
         await db.insertViolation(req.userData.id, req.body.studentId, req.body.detail, req.body.punishment);
         res.redirect('/DormAdmin/Violation');
     },
+
+    postAdminDeleteAnnouncement: async (req, res) => {
+        db.deleteAnnouncement(req.body.announcementId);
+        res.redirect('/Admin/Announcement');
+    },
+
+    postDormAdminDeleteAnnouncement: async (req, res) => {
+        db.deleteAnnouncement(req.body.announcementId, req.userData.id);
+        res.redirect('/DormAdmin/Announcement');
+    },
+
+    postAnnouncement: async (req, res) => {
+        // console.log(req.body.content, req.userData.id);
+        db.postAnnouncement(req.body.content, req.userData.id);
+        res.redirect(`/${req.userData.roles.has('Admin')? 'Admin' : 'DormAdmin'}/Announcement`);
+    },
 };

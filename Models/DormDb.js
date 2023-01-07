@@ -176,4 +176,28 @@ module.exports = {
     insertApplication: async (stu_id, school_year, semester) => {
         await pool.query(`INSERT INTO application ( student_id, school_year, semester) VALUES ('${stu_id}', '${school_year}', '${semester}');`);
     },
+
+    getAllAnouncement: async () => {
+        let result = await pool.query(`SELECT announcement_id, content, student_id, name FROM announcement NATURAL JOIN student;`);
+        return Array.from(result);
+    },
+
+    deleteAnnouncement: async (announcementId, dormAdminId) => {
+        announcementId = Math.max(0, parseInt(announcementId, 10));
+        let result;
+        if(!dormAdminId){
+            // Admin
+            result = await pool.query(`DELETE FROM announcement WHERE announcement_id=${announcementId};`);
+        }else{
+            // DormAdmin
+            dormAdminId = dormAdminId.replace(/[^\w\d]+/g, '');
+            result = await pool.query(`DELETE FROM announcement WHERE announcement_id=${announcementId} AND student_id='${dormAdminId}';`);
+        }
+        return Array.from(result);
+    },
+
+    postAnnouncement: async (content, posterId) => {
+        content = content.replace(/[;'`@]+/g, '');
+        return await pool.query(`INSERT INTO announcement (content, student_id) VALUES ('${content}', '${posterId}');`);
+    },
 }
