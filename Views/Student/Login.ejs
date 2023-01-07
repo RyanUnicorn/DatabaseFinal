@@ -4,16 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .loginh{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
     <title>請登入</title>
 </head>
 <body>
-    <%- include('../_Partials/Navbar') %>
+    <div class="loginh">
+        <div style="margin-top: 20px;">
+            <img src="/loginImg.png" style="max-width:300px;height:auto;">
+        </div>
+        <div style="margin-bottom: 20px;">
+            <h1>宿舍管理系統</h1>
+        </div>
     <form method="post" action="/Api/Login">
-        <input type="text" name="name" placeholder="學號" required>
-        <br>
-        <input type="password" name="pass" placeholder="密碼" required>
-        <br>
-        <input type="submit" value="登入">
+        <div class="loginh" style="padding: 30px; border: 1px solid black; box-shadow: 0 10px 10px -10px;">
+            <h3 style="margin-top:-10px; padding:5px">請輸入學號、密碼</h3>
+            <input style="margin-top: 10px;" type="text" name="name" placeholder="學號" required>        
+            <input style="margin-top: 10px;" type="password" name="pass" placeholder="密碼" required>
+            <input style="margin-top: 20px;" type="submit" value="登入">
+        </div>
     </form>
+    </div>
 </body>
 </html>
