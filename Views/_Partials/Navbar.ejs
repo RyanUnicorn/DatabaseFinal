@@ -1,4 +1,4 @@
-<nav>
+
     <% if(userData){ %>
 
         <% if(userData.roles.has('DormAdmin')){ %>
@@ -24,11 +24,6 @@
             <a href="/Admin/Student">學生管理</a>
             <a href="/Admin/Application">審核住宿申請</a>
         <% } %>
-
-        <span>名稱 : <%= userData.name %></span>
-        <span>帳號 : <%= userData.id %></span>
-        <a href="/Api/Logout">登出</a>
     <% }else{ %>
         <a href="/Student/Login">登入</a>
     <% } %>
-    </nav>

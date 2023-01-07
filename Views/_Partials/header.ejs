@@ -1,0 +1,13 @@
+<span class="Heade">
+    <img src="/headerImg.png" style="width:600px; padding: 5px 0px 5px 5px;">
+    <div class="prof">
+        <span style="font-size: 24px;">名稱 :<%= userData.name %></span>
+        <span style="font-size: 24px;">帳號 :<%= userData.id %></span>
+    </div>
+</span>
+<nav>
+    <ul class="cont">
+        <%- include('../_Partials/Navbar') %>
+        <a style="position:absolute; right:0px;list-style: none;padding-right: 5px;border: 0;" href="/Api/Logout">登出</a>
+    </ul>
+</nav>
