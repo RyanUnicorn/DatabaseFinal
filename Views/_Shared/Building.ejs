@@ -5,33 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/Atable.css">
     <title><%= buildingName %></title>
 </head>
 <body>
     <%- include('../_Partials/header') %>
-    <h2><%= buildingName %> : </h2>
-    <table>
-        <tr>
-            <th>房號</th>
-        </tr>
-        <% for(let r of allRooms){ %>
-            <tr>
-                <td>
-                    <% if(userData.roles.has('Admin')){ %>
-                        <a href="./<%= r.building_name %>/<%= r.room_number %>"><%= r.room_number %></a>
-                    <% }else{ %>
-                        <a href="./Room/<%= r.room_number %>"><%= r.room_number %></a>
-                    <% } %>
-                </td>
-            </tr>
-        <% } %>
-    </table>
+    <div style="display:flex; justify-content: space-evenly; align-items: center;margin: 0px 20vw 0px 20vw; ">
+    <div style="display:flex;flex-direction: column; justify-content: center; align-items: center;">
+        <div style="margin-bottom: 20px;">
+            <h2><%= buildingName %></h2>
+        </div>
+        <div style="display:flex;flex-direction: column; justify-content: center; align-items: center;border-radius: 10px;background-color: rgba(255, 255, 255, 0.500);height: auto; padding: 30px; border: 1px solid black; box-shadow: 0 10px 10px -10px;">
+            <h3 style="margin-top:-10px; padding:5px">請選擇房號</h3>
+            <% for(let r of allRooms){ %>
+                <% if(userData.roles.has('Admin')){ %>
+                    <a class="hyper" href="./<%= r.building_name %>/<%= r.room_number %>"><%= r.room_number %></a>
+                <% }else{ %>
+                    <a class="hyper" href="./Room/<%= r.room_number %>"><%= r.room_number %></a>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
     <% if(userData.roles.has('Admin')){ %>
+        <div style="display:flex;flex-direction: column; justify-content: center; align-items: center;border-radius: 10px;background-color: rgba(255, 255, 255, 0.500);height: auto; padding: 30px;margin-top: 30px; border: 1px solid black; box-shadow: 0 10px 10px -10px;">
         <form method="post" action="/Api/Admin/AddRoom">
             <input type="hidden" name="buildingName" value="<%= buildingName %>">
-            <input type="number" name="roomNumber" placeholder="房號" min="0" required>
-            <input type="submit" value="新增房間">
+            <input style="display: block;" type="number" name="roomNumber" placeholder="房號" min="0" required>
+            <input style="display: block; margin-top: 10px;" type="submit" value="新增房間">
         </form>
+        </div>
     <% } %>
+    </div>
 </body>
 </html>

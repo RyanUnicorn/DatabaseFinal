@@ -5,17 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/Atable.css">
+    <style>
+        td{
+            text-align: center;
+            height: 30px;
+        }
+    </style>
     <title>學生管理</title>
 </head>
 <body>
     <%- include('../_Partials/header') %>
-
-    <table>
+    <div>
+    <table class="Atable" style="width: 50vw;margin: 15px 25vw 0vw 25vw;background-color:rgba(255, 255, 255, 0.500);border-collapse: collapse;">
         <tr>
             <th>學號</th>
             <th>姓名</th>
             <th>宿舍大樓</th>
             <th>房號</th>
+            <th>詳細資料</th>
         </tr>
         <% for(let s of students){ %>
             <tr>
@@ -31,6 +39,6 @@
             </tr>
         <% } %>
     </table>
-    
+    </div>
 </body>
 </html>

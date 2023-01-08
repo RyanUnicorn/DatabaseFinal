@@ -5,28 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/Atable.css">
     <title>宿舍管理</title>
 </head>
 <body>
     <%- include('../_Partials/header') %>
-    <table>
+    <div style="display:flex;flex-direction: column; justify-content: space-evenly; align-items: center;margin: 0px 20vw 0px 20vw; ">
+    <h2>請選擇宿舍或新增宿舍</h2>
+    <div>
+    <table class="Atable" style="width: 30vw;margin: 15px 35vw 0vw 35vw;background-color:rgba(255, 255, 255, 0.500) ;">
         <tr>
             <th>宿舍名稱</th>
             <th>租金</th>
         </tr>
         <% for(let b of allBuilding){ %>
             <tr>
-                <td>
-                    <a href="./Dorm/<%= b.name %>"><%= b.name %></a>
+                <td style="text-align: center;height: 30px; ">
+                    <a class="hyper" href="./Dorm/<%= b.name %>"><%= b.name %></a>
                 </td>
-                <td><%= b.cost %></td>
+                <td style="text-align: center;height: 30px; "><%= b.cost %></td>
             </tr>
         <% } %>
     </table>
+    </div>
+    <div style="display:flex;flex-direction: column; justify-content: center; align-items: center;width:25vw ; border-radius: 10px;background-color: rgba(255, 255, 255, 0.500);height: auto;padding: 15px 0px 15px 0px ; margin-top: 30px; border: 1px solid black; box-shadow: 0 10px 10px -10px;">
     <form method="post" action="/Api/Admin/AddBuilding">
-        <input type="text" name="buildingName" placeholder="宿舍名稱" required>
-        <input type="number" name="buildingCost" placeholder="租金" min="0" required>
-        <input type="submit" value="新增宿舍">
+        <input style="display: block;" type="text" name="buildingName" placeholder="宿舍名稱" required>
+        <input style="display: block;margin-top: 10px; " type="number" name="buildingCost" placeholder="租金" min="0" required>
+        <input style="display: block;margin-top: 10px;" type="submit" value="新增宿舍">
     </form>
+    </div>
+    </div>
 </body>
 </html>

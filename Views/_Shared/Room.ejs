@@ -5,24 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/Atable.css">
     <title>房間</title>
 </head>
 <body>
     <%- include('../_Partials/header') %>
-
-    <h2><%= buildingName %>-<%= roomNumber %>:</h2>
-
-    <table>
+    <div style="display:flex;flex-direction: column;justify-content: center;align-items: center;">
+    <div class="Atable" style="max-width: 20vw;margin: 15px 40vw 0vw 40vw;background-color:rgba(255, 255, 255, 0.500) ;">
+    <table class="caption-top">
+        <caption><h3><%= buildingName %>-<%= roomNumber %></h3></caption>
         <tr>
-            <th>學號</th>
-            <th>姓名</th>
+            <th style="width: 10vw;">學號</th>
+            <th style="width: 10vw;">姓名</th>
+            <% if(userData.roles.has('Admin')){ %>
+                <th style="width: 8vw;">詳細資料</th>
+            <% } %>
         </tr>
         <% for(let s of allStudents){ %>
             <tr>
-                <td><%= s.student_id %></td>
-                <td><%= s.name %></td>
+                <td style="text-align: center;height: 30px; "><%= s.student_id %></td>
+                <td style="text-align: center;"><%= s.name %></td>
                 <% if(userData.roles.has('Admin')){ %>
-                    <td>
+                    <td style="text-align: center;">
                         <a href="/Admin/Student/<%= s.student_id %>">
                             <button>學生資料</button>
                         </a>
@@ -31,41 +35,21 @@
             </tr>
         <% } %>
     </table>
-
+    </div>
     <% if(userData.roles.has('Admin')){ %>
-        <details>
-            <summary>新增核可學生</summary>
-            <table>
+        <div class="Atable" style="max-width: 20vw;margin: 30px 40vw 0vw 40vw;background-color:rgba(255, 255, 255, 0.500) ;">
+            <table class="caption-top">
+                <caption><h3>設備</h3></caption>
                 <tr>
-                    <th>學號</th>
-                    <th>姓名</th>
-                </tr>
-                <% for(let s of assignableStudents){ %>
-                    <tr>
-                        <form method="post" action="/Api/Admin/AssignStudent">
-                            <input type="hidden" name="buildingName" value="<%= buildingName %>">
-                            <input type="hidden" name="roomNumber" value="<%= roomNumber %>">
-                            <input type="hidden" name="studentId" value="<%= s.student_id %>">
-                            <td><%= s.student_id %></td>
-                            <td><%= s.name %></td>
-                            <td><input type="submit" value="新增"></td>
-                        </form>
-                    </tr>
-                <% } %>
-            </table>
-        </details>
-        <details>
-            <summary>設備</summary>
-            <table>
-                <tr>
-                    <th>名稱</th>
-                    <th>數量</th>
+                    <th style="width: 10vw;">名稱</th>
+                    <th style="width: 5vw;">數量</th>
+                    <th style="width: 5vw;">動作</th>
                 </tr>
                 <% for(let e of allEquipments){ %>
                     <tr>
-                        <td><%= e.name %></td>
-                        <td><%= e.quantity %></td>
-                        <td>
+                        <td style="text-align: center;height: 30px; "><%= e.name %></td>
+                        <td style="text-align: center;height: 30px; "><%= e.quantity %></td>
+                        <td style="text-align: center;height: 30px; ">
                             <a href="/Admin/Dorm/<%= buildingName %>/<%= roomNumber %>/<%= e.name %>">
                                 <button>更改</button>
                             </a>
@@ -73,7 +57,30 @@
                     </tr>
                 <% } %>
             </table>
-        </details>
+        </div>
+        <div class="Atable" style="max-width: 20vw;margin: 30px 40vw 0vw 40vw;background-color:rgba(255, 255, 255, 0.500) ;">
+            <table class="caption-top">
+                <caption><h3>新增核可學生</h3></caption>
+                <tr>
+                    <th style="width: 10vw;">學號</th>
+                    <th style="width: 10vw;">姓名</th>
+                    <th style="width: 8vw;">動作</th>
+                </tr>
+                <% for(let s of assignableStudents){ %>
+                    <tr>
+                        <form method="post" action="/Api/Admin/AssignStudent">
+                            <input type="hidden" name="buildingName" value="<%= buildingName %>">
+                            <input type="hidden" name="roomNumber" value="<%= roomNumber %>">
+                            <input type="hidden" name="studentId" value="<%= s.student_id %>">
+                            <td style="text-align: center;height: 30px; "><%= s.student_id %></td>
+                            <td style="text-align: center;height: 30px; "><%= s.name %></td>
+                            <td style="text-align: center;height: 30px; "><input type="submit" value="新增"></td>
+                        </form>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
     <% } %>
+    </div>
 </body>
 </html>

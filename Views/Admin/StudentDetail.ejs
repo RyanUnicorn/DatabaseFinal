@@ -5,40 +5,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/header.css">
+    <style>
+        table tr{
+            border-bottom: solid 2px white;
+        }
+        table tr:last-child{
+            border-bottom: none;
+        }
+        table th{
+            position: relative;
+            width: 30%;
+            background-color: rgb(69, 69, 69);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        table th:after{
+            display: block;
+            content: "";
+            width: 0px;
+            height: 0px;
+            position: absolute;
+            top:calc(50% - 10px);
+            right:-10px;
+            border-left: 10px solid rgb(69, 69, 69);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+        table td{
+            text-align: left;
+            width: 70%;
+            text-align: center;
+            background-color: #eee;
+            padding: 10px 0;
+        }
+    </style>
     <title><%= studentData.student_id %> 詳細資料</title>
 </head>
 <body>
     <%- include('../_Partials/header') %>
-    <table>
+    <table style="border-collapse: collapse;width:30vw;margin: 20px 35vw 0vw 35vw;box-shadow: 0 10px 10px -10px black;">
         <tr>
             <th>學號</th>
-            <th><%= studentData.student_id %></th>
+            <td><%= studentData.student_id %></td>
         </tr>
         <tr>
             <th>姓名</th>
-            <th><%= studentData.name %></th>
+            <td><%= studentData.name %></td>
         </tr>
         <tr>
             <th>性別</th>
-            <th><%= (studentData.sex ?? '非二元性別') === 'M'? '男' : '女' %></th>
+            <td><%= (studentData.sex ?? '非二元性別') === 'M'? '男' : '女' %></td>
         </tr>
         <tr>
             <th>電子郵件</th>
-            <th><%= studentData.email ?? '無' %></th>
+            <td><%= studentData.email ?? '無' %></td>
         </tr>
         <tr>
             <th>電話</th>
-            <th><%= studentData.phone_number ?? '無' %></th>
+            <td><%= studentData.phone_number ?? '無' %></td>
         </tr>
         <tr>
             <th>宿舍大樓</th>
-            <th><%= studentData.building_name ?? '未住宿' %></th>
+            <td><%= studentData.building_name ?? '未住宿' %></td>
         </tr>
         <tr>
             <th>房號</th>
-            <th><%= studentData.room_number ?? '未住宿' %></th>
+            <td><%= studentData.room_number ?? '未住宿' %></td>
         </tr>
     </table>
-    
 </body>
 </html>

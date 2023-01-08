@@ -10,15 +10,18 @@
 <body>
     <%- include('../_Partials/header') %>
 
-    <h2><%= buildingName %>-<%= roomNumber %>-<%= equipmentDetail.name %>:</h2>
+    <div style="display:flex;flex-direction: column; justify-content: center; align-items: center;width: 30vw;margin: 0vw 35vw 0vw 35vw; border-radius: 10px;background-color: rgba(255, 255, 255, 0.500);padding-bottom: 30px; margin-top: 30px; border: 1px solid black; box-shadow: 0 10px 10px -10px;">
     <form method="post" action="/Api/Admin/UpdateEquipment">
+        <h3 style="display: block; text-align: center;"><%= buildingName %>-<%= roomNumber %>-<%= equipmentDetail.name %></h3>
         <input type="hidden" name="buildingName" value="<%= buildingName %>">
         <input type="hidden" name="roomNumber" value="<%= roomNumber %>">
         <input type="hidden" name="equipmentName" value="<%= equipmentDetail.name %>">
-        <input type="number" id="quantity" name="quantity" value="<%= equipmentDetail.quantity %>" min="1" >
-        <label for="quantity">個</label>
-        <input type="submit" value="更新">
+        <div>
+            <input type="number" id="quantity" name="quantity" value="<%= equipmentDetail.quantity %>" min="1" >
+            <label for="quantity">個</label>
+        </div>
+        <input style="display: block;margin-top: 10px;" type="submit" value="更新">
     </form>
-
+    </div>
 </body>
 </html>

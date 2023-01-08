@@ -5,20 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/Atable.css">
     <title>留言板</title>
 </head>
 <body>
     <%- include('../_Partials/header') %>
-
+    <div class="Atable" style="box-shadow: none;">
     <table>
+        <tr>
+            <th style="width:20vw;">內容</th>
+            <th style="width:10vw;">留言者</th>
+            <% if(userData.roles.has('Admin')){ %>
+                <th style="width:10vw;">動作</th>
+            <% }else if(userData.roles.has('DormAdmin')){ %>
+                <th style="width:10vw;">動作</th>
+            <% } %>
+        </tr>
         <% for(let c of comments){ %>
             <tr>
                 <td>
                     <%= c.comment %>
                 </td>
-                <td><%= c.name %>(<%= c.student_id %>)</td>
+                <td style="text-align: center;"><%= c.name %>(<%= c.student_id %>)</td>
                 <% if(userData.roles.has('Admin') || userData.roles.has('DormAdmin')){ %>
-                    <td>
+                    <td class="deleteBT">
                         <form method="post" action="/Api/DeleteComment" onsubmit="return confirm('確定刪除?')">
                             <input type="hidden" name="commentId" value="<%= c.comment_id %>">
                             <input type="submit" value="刪除">
@@ -28,10 +38,11 @@
             </tr>
         <% } %>
     </table>
-
+    </div>
     <form method="post" action="/Api/PostComment">
-        <input type="text" name="comment" placeholder="輸入留言">
-        <input type="submit" value="留言">
+        <input style="width:30vw;height: 30px; margin-left: 5px;" type="text" name="comment" placeholder="輸入留言">
+        <br>
+        <input style="margin:10px 0px 0px 5px;" type="submit" value="留言">
     </form>
     
 </body>
