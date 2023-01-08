@@ -15,7 +15,7 @@ module.exports = {
         name = name.replace(regex, '');
         pass = pass.replace(regex, '');
 
-        if(name === 'admin'){
+        if(name.toLowerCase() === 'admin'){
             name = 'A0000000';
         }
 
@@ -34,7 +34,7 @@ module.exports = {
                 // console.log('is DormAdmin');
             }
 
-            if(name === 'A0000000'){
+            if(name.toUpperCase() === 'A0000000'){
                 userRoles = 'Admin';
                 // console.log('is Admin');
             }else{
