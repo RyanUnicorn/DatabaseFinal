@@ -5,58 +5,76 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/Atable.css">
+    <style>
+        td{
+            height: 25px;
+        }
+    </style>
     <title>違規紀錄</title>
 </head>
-<body style="margin: 0; padding: 0;">
+<body>
     <%- include('../_Partials/header') %>
-
+    <div class="Atable">
     <table>
         <tr>
-            <th>日期</th>
-            <th>學號</th>
-            <th>姓名</th>
-            <th>違規細節</th>
-            <th>懲處</th>
-            <th>宿舍大樓</th>
-            <th>房號</th>
-            <th>舍監學號</th>
+            <th style="width:15vw;">日期</th>
+            <th style="width:10vw;">學號</th>
+            <th style="width:10vw;">姓名</th>
+            <th style="width:30vw;">違規細節</th>
+            <th style="width:30vw;">懲處</th>
+            <th style="width:10vw;">宿舍大樓</th>
+            <th style="width:5vw;">房號</th>
+            <th style="width:10vw;">舍監學號</th>
+            <% if(userData.roles.has('Admin')){ %>
+                <th style="width:10vw;">動作</th>
+            <% }else if(userData.roles.has('DormAdmin')){ %>
+                <th style="width:10vw;">動作</th>
+            <% } %>
         </tr>
 
         <% for(let v of violationDatas){ %>
             <tr>
-                <td><%= v.violation_date.toLocaleString('zh-TW') %></td>
-                <td><%= v.student_id %></td>
-                <td><%= v.name %></td>
+                <td style="text-align: center;"><%= v.violation_date.toLocaleString('zh-TW') %></td>
+                <td style="text-align: center;"><%= v.student_id %></td>
+                <td style="text-align: center;"><%= v.name %></td>
                 <td><%= v.violation_detail %></td>
                 <td><%= v.punishment %></td>
-                <td><%= v.building_name %></td>
-                <td><%= v.room_number %></td>
-                <td><%= v.dorm_admin_id %></td>
+                <td style="text-align: center;"><%= v.building_name %></td>
+                <td style="text-align: center;"><%= v.room_number %></td>
+                <td style="text-align: center;"><%= v.dorm_admin_id %></td>
                 <% if(userData.roles.has('Admin')){ %>
-                    <td>
+                    <td class="deleteBT">
                         <form method="post" action="/Api/Admin/DeleteViolation" onsubmit="return confirm('確定刪除?')">
                             <input type="hidden" name="violationId" value="<%= v.violation_id %>">
                             <input type="submit" value="刪除">
                         </form>
                     </td>
                 <% }else if(userData.roles.has('DormAdmin') && v.dorm_admin_id === userData.id){ %>
-                    <td>
+                    <td class="deleteBT">
                         <form method="post" action="/Api/DormAdmin/DeleteViolation" onsubmit="return confirm('確定刪除?')">
                             <input type="hidden" name="violationId" value="<%= v.violation_id %>">
                             <input type="submit" value="刪除">
                         </form>
                     </td>
+                <% }else if(userData.roles.has('DormAdmin')){ %>
+                    <td style="text-align: center;"></td>
                 <% } %>
             </tr>
         <% } %>    
     </table>
-    
+    </div>
     <% if(userData.roles.has('DormAdmin')){ %>
         <form method="post" action="/Api/DormAdmin/NewViolation">
-            <input type="text" name="studentId" placeholder="違規學生學號" required>
-            <input type="text" name="detail" placeholder="違規細節" required>
-            <input type="text" name="punishment" placeholder="懲處" required>
-            <input type="submit" value="新增">
+            <div class="ADDwindow">
+                <div class="ADDwindow" style="max-width: 500px;background-color: rgb(80, 160, 250);border-radius: 10px; margin-top:50px;padding: 10px; border: 1px solid black; box-shadow: 0 10px 10px -10px;">
+                    <h3 style="margin-top:-10px; padding:5px">請輸入學號及違規事項</h3>
+                    <input style="margin-top: 10px; height: 20px;" type="text" name="studentId" placeholder="違規學生學號" required>
+                    <input style="margin-top: 10px; height: 20px;" type="text" name="detail" placeholder="違規細節" required>
+                    <input style="margin-top: 10px; height: 20px;" type="text" name="punishment" placeholder="懲處" required>
+                    <input style="margin-top: 15px;" type="submit" value="新增">
+                </div>
+            </div>
         </form>
     <% } %>
 

@@ -5,46 +5,65 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/Atable.css">
+    <style>
+        textarea{
+            color: black;
+            font-size: 16px;
+            resize: none;
+        }
+    </style>
     <title>公告</title>
 </head>
-<body style="margin: 0; padding: 0;">
+<body>
     <%- include('../_Partials/header') %>
-
-    <table>
-        <tr>
-            <th>公告內容</th>
-            <th>公告人</th>
-        </tr>
-
-        <% for(let a of announcements){ %>
+    <div class="Atable">
+        <table>
             <tr>
-                <td>
-                    <textarea readonly disabled><%= a.content %></textarea>
-                </td>
-                <td><%= a.name %>(<%= a.student_id %>)</td>
+                <th style="width:75vw;">公告內容</th>
+                <th style="width:25vw;">公告人</th>
                 <% if(userData.roles.has('Admin')){ %>
-                    <td>
-                        <form method="post" action="/Api/Admin/DeleteAnnouncement" onsubmit="return confirm('確定刪除?')">
-                            <input type="hidden" name="announcementId" value="<%= a.announcement_id %>">
-                            <input type="submit" value="刪除">
-                        </form>
-                    </td>
-                <% }else if(userData.roles.has('DormAdmin') && a.student_id === userData.id){ %>
-                    <td>
-                        <form method="post" action="/Api/DormAdmin/DeleteAnnouncement" onsubmit="return confirm('確定刪除?')">
-                            <input type="hidden" name="announcementId" value="<%= a.announcement_id %>">
-                            <input type="submit" value="刪除">
-                        </form>
-                    </td>
+                    <th style="width:10vw;">動作</th>
+                <% }else if(userData.roles.has('DormAdmin')){ %>
+                    <th style="width:10vw;">動作</th>
                 <% } %>
             </tr>
-        <% } %>
-    </table>
 
+            <% for(let a of announcements){ %>
+                <tr>
+                    <td>
+                        <textarea style="width: 75vw;height: 50px; background:transparent; border-style: none;" readonly disabled><%= a.content %></textarea>
+                    </td>
+                    <td style="text-align: center;"><%= a.name %>(<%= a.student_id %>)</td>
+                    <% if(userData.roles.has('Admin')){ %>
+                        <td class="deleteBT">
+                            <form method="post" action="/Api/Admin/DeleteAnnouncement" onsubmit="return confirm('確定刪除?')">
+                                <input type="hidden" name="announcementId" value="<%= a.announcement_id %>">
+                                <input type="submit" value="刪除">
+                            </form>
+                        </td>
+                    <% }else if(userData.roles.has('DormAdmin') && a.student_id === userData.id){ %>
+                        <td class="deleteBT">
+                            <form method="post" action="/Api/DormAdmin/DeleteAnnouncement" onsubmit="return confirm('確定刪除?')">
+                                <input type="hidden" name="announcementId" value="<%= a.announcement_id %>">
+                                <input type="submit" value="刪除">
+                            </form>
+                        </td>
+                    <% }else if(userData.roles.has('DormAdmin')){ %>
+                        <td style="text-align: center;"></td>
+                    <% } %>
+                </tr>
+            <% } %>
+        </table>
+    </div>
     <% if(userData.roles.has('Admin') || userData.roles.has('DormAdmin')){ %>
         <form method="post" action="/Api/PostAnnouncement">
-            <textarea name="content" id="" cols="30" rows="10" placeholder="輸入公告內容" ></textarea>
-            <input type="submit" value="公佈">
+            <div class="ADDwindow">
+                <div class="ADDwindow" style="max-width: 500px;background-color: rgb(80, 160, 250);border-radius: 10px; margin-top:50px;padding: 10px; border: 1px solid black; box-shadow: 0 10px 10px -10px;">
+                    <textarea style="border-radius: 5px;" name="content" id="" cols="30" rows="10" placeholder="輸入公告內容" ></textarea>
+                    <input style="margin-top: 10px; width: 50px;" type="submit" value="公佈">
+                </div>
+            </div>
         </form>
     <% } %>
     
