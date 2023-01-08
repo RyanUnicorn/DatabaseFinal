@@ -31,3 +31,13 @@
     justify-content: center;
     align-items: center;
 }
+.hyper{
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding: 5px;
+}
+.hyper:hover{
+    color: rgb(0, 90, 180);
+}
