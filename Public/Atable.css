@@ -1,0 +1,33 @@
+.Atable{
+    overflow: hidden;
+    border-radius: 20px;
+    padding: 5px;
+    box-shadow: 0 10px 10px -10px black;
+}
+.Atable table{
+    border-collapse: collapse;
+}
+.Atable th{
+    background-color: rgb(80, 160, 250);
+}
+.Atable td{
+    background-color:white ;
+}
+.Atable tr{
+    border-bottom: 1px solid gray;
+}
+.Atable tr:last-of-type{
+    border-bottom: 2px solid rgb(80, 160, 250);
+}
+.Atable tr:nth-of-type(even) td{
+    background-color: rgb(180, 180, 180);
+}
+.deleteBT{
+    text-align: center;
+}
+.ADDwindow{
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+}
